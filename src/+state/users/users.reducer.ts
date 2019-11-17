@@ -7,34 +7,21 @@ import {
   LOAD_USERS,
   LOAD_USERS_SUCCESS,
   UsersAction,
+  SEARCH_USER,
 } from './users.actions';
 
 export interface UsersState {
   users: EntitiesMap<UserModel>;
   loading: boolean;
   searchResult: UserModel[];
+  searchValue: string;
 }
 
 const initialState: UsersState = {
-  users: {
-    ['1']: {
-      id: 1,
-      name: 'Leanne Graham',
-      username: "Bret",
-    },
-    ['2']: {
-      id: 2,
-      name: 'Ervin Howell',
-      username: 'Antonette',
-    },
-    ['3']: {
-      id: 3,
-      name: 'Clementine Bauch',
-      username: 'Samantha'
-    }
-  },
+  users: {},
   loading: false,
   searchResult: [],
+  searchValue: '',
 };
 
 export function usersReducer(state: UsersState = initialState, action: UsersAction): UsersState {
@@ -54,6 +41,13 @@ export function usersReducer(state: UsersState = initialState, action: UsersActi
           (total, current) => ({ ...total, [current.id]: current }),
           {}
         )
+      };
+    }
+
+    case SEARCH_USER: {
+      return {
+        ...state,
+        searchValue: action.searchValue,
       };
     }
 

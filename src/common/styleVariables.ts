@@ -47,3 +47,5 @@ export const colors: Colors = {
   success: '#dc3545',
   danger: '#28a745',
 };
+
+export const phoneBreakpoint = '600px';

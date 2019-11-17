@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { SyntheticEvent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Page,
@@ -6,16 +7,51 @@ import {
 } from 'components/shared';
 
 import {
-  ConnectedUsersList,
+  useDebounceInput,
+  match,
+} from 'common';
+
+import {
+  UsersState,
+  loadUsers,
+  searchUser,
+} from '+state';
+
+import {
+  UsersList,
 } from '../UsersList';
 
+const PAGE_TITLE = 'Users List';
+const INPUT_PLACEHOLDER = 'Search...';
+
+const usersSelector = (state: UsersState) =>
+  Object.keys(state.users)
+    .map(key => state.users[key])
+    .filter(user => match(user.name, state.searchValue));
+
 export const UsersPage: React.FC = () => {
-  const title = 'Users List';
+  const handleSearch = (value: string) => dispatch(searchUser(value));
+  const onInputChange = (e: SyntheticEvent<HTMLInputElement>) => setInputText(e.currentTarget.value);
+
+  const users = useSelector(usersSelector);
+  const loading = useSelector((state: UsersState) => state.loading);
+  const dispatch = useDispatch();
+  const { inputText, setInputText } = useDebounceInput((handleSearch));
+
+  useEffect(() => {
+    dispatch(loadUsers());
+  }, [dispatch]);
+
   return (
     <Page
-      title={title}
-      headerControls={ <Input /> }
-      pageContent= { <ConnectedUsersList /> }>
+      title={PAGE_TITLE}
+      headerControls={ <Input
+        value={inputText}
+        onChange={onInputChange}
+        placeholder={INPUT_PLACEHOLDER}
+
+      /> }
+      pageContent= { <UsersList users={users} loading={loading} /> }>
     </Page>
   );
 };

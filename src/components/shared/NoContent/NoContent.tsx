@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledNoContent = styled.div`
   width: 100%;
-  font-size: .8rem;
+  font-size: 1.8rem;
   color: #fff;
 `;
 

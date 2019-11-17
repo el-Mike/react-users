@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import {
   colors,
+  phoneBreakpoint,
 } from 'common';
 
 import {
@@ -17,11 +18,21 @@ const PageHeader = styled.div`
   display: flex;
   padding: .8rem;
   justify-content: space-between;
+
+  @media(max-width: ${phoneBreakpoint}) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const HeaderControls = styled.div`
-display: flex;
-justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
+
+  @media(max-width: ${phoneBreakpoint}) {
+    justify-content: center;
+    margin-top: .8rem;
+  }
 `;
 
 const PageContent = styled.div`

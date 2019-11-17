@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux'
 
 import styled from 'styled-components';
 
@@ -8,14 +7,16 @@ import {
 } from 'models';
 
 import {
+  LoadingIndicator,
+  NoContent,
+} from 'components/shared';
+
+import {
   User,
 } from '../User';
 
-import {
-  UsersState,
-} from '+state';
-
 interface UsersListProps {
+  loading: boolean;
   users: UserModel[];
 }
 
@@ -27,19 +28,20 @@ const StyledUsersList = styled.div`
 `;
 
 export const UsersList: React.FC<UsersListProps> = props => {
+  const { users, loading } = props;
   return (
     <StyledUsersList>
-      {props.users.map((user, i) => (
-        <User user={user} index={i} />
-      ))}
+      {loading ? (
+        <LoadingIndicator />
+      ) : (
+        users.length > 0 ? (
+          users.map((user, i) => (
+            <User user={user} index={i + 1} key={user.id}/>
+          ))
+        ) : (
+          <NoContent />
+        )
+      )}
     </StyledUsersList>
   );
 };
-
-const mapStateToProps = (state: UsersState) => ({
-  users: Object.keys(state.users).map(key => state.users[key]),
-});
-
-export const ConnectedUsersList = connect(
-  mapStateToProps,
-)(UsersList);
