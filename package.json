@@ -11,7 +11,7 @@
     "@types/redux": "^3.6.0",
     "@types/styled-components": "^4.4.0",
     "awesome-debounce-promise": "^2.1.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "react": "^16.11.0",
     "react-async-hook": "^3.6.1",
     "react-dom": "^16.11.0",
